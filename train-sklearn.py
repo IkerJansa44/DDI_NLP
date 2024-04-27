@@ -30,10 +30,9 @@ if __name__ == '__main__':
 
 	v = DictVectorizer()
 	X_train = v.fit_transform(train_features)
-
-	clf = MultinomialNB(alpha=0.01)
+	clf = MultinomialNB(alpha=0.1)
 	clf.partial_fit(X_train, y_train, classes)
-
+	
 	#Save classifier and DictVectorizer
 	dump(clf, model_file) 
 	dump(v, vectorizer_file)
