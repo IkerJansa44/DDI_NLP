@@ -124,6 +124,7 @@ class deptree :
     ## --------------------------------------------------------------
     ## check whether a token is a stopword
     def is_stopword(self,n):
+        
         # if it is not a Noun, Verb, adJective, or adveRb, then it is a stopword
         return self.tree.nodes[n]["tag"][0] not in ['N', 'V', 'J', 'R']
 
