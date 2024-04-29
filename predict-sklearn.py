@@ -3,7 +3,7 @@
 import sys
 from joblib import dump, load
 from sklearn.feature_extraction import DictVectorizer
-
+import numpy as np
 
 def prepare_instances(xseq):
 	features = []
@@ -23,7 +23,22 @@ if __name__ == '__main__':
 		fields = line.strip('\n').split("\t")
 		(sid,e1,e2) = fields[0:3]        
 		vectors = v.transform(prepare_instances([fields[4:]]))
-		prediction = model.predict(vectors)
+		prediction = model.predict_proba(vectors)[0]
+		#percent = np.max(prediction)
+		max_idx = np.argmax(prediction)
+		#if percent >= 0.8:
+		if max_idx==0:
+			prediction="advise"
+		elif max_idx == 1:
+			prediction = "effect"
+		elif max_idx == 2:
+			prediction = "int"
+		elif max_idx == 3:
+			prediction = "mechanism"
+		elif max_idx == 4:
+			prediction = "null"
+		#else:
+			#prediction="null"
 		if prediction != "null" :            
-			print(sid,e1,e2,prediction[0],sep="|")
+			print(sid,e1,e2,prediction,sep="|")
 
