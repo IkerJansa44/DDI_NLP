@@ -3,6 +3,7 @@
 import sys
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.naive_bayes import MultinomialNB
+from sklearn.svm import LinearSVC, SVC
 import numpy as np
 from joblib import dump
 
@@ -30,8 +31,11 @@ if __name__ == '__main__':
 
 	v = DictVectorizer()
 	X_train = v.fit_transform(train_features)
-	clf = MultinomialNB(alpha=0.1)
-	clf.partial_fit(X_train, y_train, classes)
+	#clf = MultinomialNB(alpha=0.1)
+	#clf.partial_fit(X_train, y_train, classes)
+	clf = LinearSVC()
+	#clf = SVC(kernel='linear')
+	clf.fit(X_train, y_train)
 	
 	#Save classifier and DictVectorizer
 	dump(clf, model_file) 

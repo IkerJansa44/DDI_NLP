@@ -4,15 +4,15 @@
 
 BASEDIR="."
 
-./corenlp-server.sh -quiet true -port 9000 -timeout 15000  &
-sleep 1
+#./corenlp-server.sh -quiet true -port 9000 -timeout 15000  &
+#sleep 1
 
 # extract features
 echo "Extracting features"
 python extract-features.py $BASEDIR/data/devel/ > devel.cod &
 python extract-features.py $BASEDIR/data/train/ | tee train.cod | cut -f4- > train.cod.cl
 
-kill `cat /tmp/corenlp-server.running`
+#kill `cat /tmp/corenlp-server.running`
 
 # train model
 echo "Training model"
