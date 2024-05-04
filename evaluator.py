@@ -153,7 +153,7 @@ def print_statistics(gold,predicted) :
     print(row("m.avg")+"{:>4}\t{:>4}\t{:>4}\t{:>4}\t{:>4}\t{:2.1%}\t{:2.1%}\t{:2.1%}".format(tp,fp,fn,npred,nexp, P, R, F1))                        
     (tp,fp,fn,npred,nexp,P,R,F1) = statistics(gold, predicted, "NOCLASS")
     print(row("m.avg(no class)")+"{:>4}\t{:>4}\t{:>4}\t{:>4}\t{:>4}\t{:2.1%}\t{:2.1%}\t{:2.1%}".format(tp,fp,fn,npred,nexp, P, R, F1))               
-
+    return sP, sR, sF1
 ## --
 ## -- Evaluates results in outfile comparing them with gold standard in golddir.
 ## -- 'task' is either NER or DDI
@@ -176,7 +176,12 @@ def evaluate(task, golddir, outfile):
     predicted = load_predicted(task, outfile)
 
     # compare both sets and compute statistics
-    print_statistics(gold,predicted)
+    P, R, F1 = print_statistics(gold,predicted)
+    # append bias and f1 to a txt file
+    """with open("XGB_nullbias.txt", "a") as f:
+        f.write(f"{str(P)}, {str(R)}, {str(F1)} \n")"""
+
+    
          
         
 ## --
@@ -188,9 +193,9 @@ def evaluate(task, golddir, outfile):
 
 if __name__ == "__main__":
 
-    if len(sys.argv) != 4 :
+    """if len(sys.argv) != 4 :
         print("\n  Usage: evaluator.py (NER|DDI) golddir outfile\n")
-        exit()
+        exit()"""
         
     task = sys.argv[1]
     golddir = sys.argv[2]

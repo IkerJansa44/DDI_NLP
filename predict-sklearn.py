@@ -17,13 +17,14 @@ if __name__ == '__main__':
 
     # load leaned model and DictVectorizer
 	model = load(sys.argv[1])
-	v  = load(sys.argv[2]) 
+	v  = load(sys.argv[2])
+	#bias_null = -float(sys.argv[3]) 
 	for line in sys.stdin:
-
 		fields = line.strip('\n').split("\t")
 		(sid,e1,e2) = fields[0:3]        
 		vectors = v.transform(prepare_instances([fields[4:]]))
 		prediction = model.predict_proba(vectors)[0]
+		prediction[-1]= prediction[-1] # + bias_null
 		#percent = np.max(prediction)
 		max_idx = np.argmax(prediction)
 		#if percent >= 0.8:
